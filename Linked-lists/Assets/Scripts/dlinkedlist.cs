@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using static SingleLinkedList<T>;
 
 //Insert, remove, addfirst, removefirst, addlast, removelast (add and remove head/tail), addbefore, addafter
 
@@ -40,6 +39,7 @@ public class DoubleLinkedList<T> : IEnumerable<T> {
             newNode.prev = null;
             head = newNode;
         }
+
         else
         {
             var left = GetNode(index - 1);
@@ -61,6 +61,16 @@ public class DoubleLinkedList<T> : IEnumerable<T> {
             {
                 yield return node.data;
                 node = node.next;
+            }
+        }
+
+        if (tail != null)
+        {
+            var node = tail;
+            while (node != null)
+            {
+                yield return node.data;
+                node = node.prev;
             }
         }
     }
