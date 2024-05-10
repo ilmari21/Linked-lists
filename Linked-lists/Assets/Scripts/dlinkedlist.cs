@@ -28,6 +28,8 @@ public class DoubleLinkedList<T> : IEnumerable<T> {
             return tail;
         }
     }
+    
+    public DoubleLinkedList() { }
 
     public void Insert(int index, T data)
     {
