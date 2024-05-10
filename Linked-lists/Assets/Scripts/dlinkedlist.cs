@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using static SingleLinkedList<T>;
 
-//Insert, remove, addfirst, removefirst, addlast, removelast (add and remove head/tail)
+//Insert, remove, addfirst, removefirst, addlast, removelast (add and remove head/tail), addbefore, addafter
 
 public class DoubleLinkedList<T> : IEnumerable<T> {
     public class DLLNode
@@ -29,6 +30,26 @@ public class DoubleLinkedList<T> : IEnumerable<T> {
         }
     }
 
+    public void Insert(int index, T data)
+    {
+        var newNode = new DLLNode();
+        newNode.data = data;
+        if (index == 0)
+        {
+            newNode.next = head;
+            newNode.prev = null;
+            head = newNode;
+        }
+        else
+        {
+            var left = GetNode(index - 1);
+            var right = left.next;
+            left.next = newNode;
+            newNode.next = right;
+            newNode.prev = left;
+        }
+    }
+
     #region IEnumerable implementation
 
     public IEnumerator<T> GetEnumerator()
@@ -54,4 +75,15 @@ public class DoubleLinkedList<T> : IEnumerable<T> {
     }
 
     #endregion
+
+    public DLLNode GetNode(int i)
+    {
+        var it = head;
+        while (i > 0)
+        {
+            it = it.next;
+            i--;
+        }
+        return it;
+    }
 }
