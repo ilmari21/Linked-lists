@@ -109,10 +109,11 @@ public class DoubleLinkedList<T> : IEnumerable<T> {
     {
         var newNode = new DLLNode();
         newNode.data = value;
-        newNode.next = node.next;
-        newNode.prev = node;
-        node.next.prev = newNode;
-        node.next = newNode;
+        var it = FindNode(node);
+        newNode.next = it.next;
+        newNode.prev = it;
+        it.next.prev = newNode;
+        it.next = newNode;
 
         //var newNode = new DLLNode();
         //newNode.data = value;
@@ -135,10 +136,11 @@ public class DoubleLinkedList<T> : IEnumerable<T> {
     {
         var newNode = new DLLNode();
         newNode.data = value;
-        newNode.next = node;
-        newNode.prev = node.prev;
-        node.prev.next = newNode;
-        node.prev = newNode;
+        var it = FindNode(node);
+        newNode.next = it;
+        newNode.prev = it.prev;
+        it.prev.next = newNode;
+        it.prev = newNode;
 
         //var newNode = new DLLNode();
         //newNode.data = value;
@@ -230,7 +232,7 @@ public class DoubleLinkedList<T> : IEnumerable<T> {
 
     public DLLNode Find(T data)
     {
-        var it = head.next;
+        var it = head;
         while (it != null && !(it.data.Equals(data)))
         {
             it = it.next;
@@ -252,7 +254,7 @@ public class DoubleLinkedList<T> : IEnumerable<T> {
     // not in C# LinkedList (not needed in DLL)
     public DLLNode FindPreviousNode(DLLNode node)
     {
-        var it = head.next;
+        var it = head;
         while (it != null && it.next != node)
         {
             it = it.next;
@@ -262,7 +264,7 @@ public class DoubleLinkedList<T> : IEnumerable<T> {
 
     public DLLNode GetNode(int i)
     {
-        var it = head.next;
+        var it = head;
         while (i > 0)
         {
             it = it.next; //error
