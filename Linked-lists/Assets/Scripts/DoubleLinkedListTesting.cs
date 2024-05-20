@@ -48,16 +48,17 @@ public class DoubleLinkedListTesting : MonoBehaviour {
 		print(dll);
 	}
 
-	//void TestAddBeforeAfter() {
-	//	var dll = new DoubleLinkedList<string>();
-	//	print("Test Add Before/After");
-	//	dll.AddLast("Baz");
-	//	dll.AddBefore(dll.First, "Foo");
-	//	dll.AddBefore(dll.GetNode(1), "Bar");
-	//	print("Count: " + dll.Count + ", Value at 1: " + dll.GetValue(1));
-	//	print("Expected Count: 3, Value: Bar");
-	//	print(dll);
-	//}
+	void TestAddBeforeAfter()
+	{
+		var dll = new DoubleLinkedList<string>();
+		print("Test Add Before/After");
+		dll.AddLast("Baz");
+		dll.AddBefore(dll.First, "Foo");
+		dll.AddBefore(dll.GetNode(1), "Bar");
+		print("Count: " + dll.Count + ", Value at 1: " + dll.GetValue(1));
+		print("Expected Count: 3, Value: Bar");
+		print(dll);
+	}
 
 
 	void TestEnumeration() {
