@@ -7,30 +7,31 @@ public class DoubleLinkedListTesting : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//TestIndexOperations();
-		TestConstructor();
+		//TestConstructor();
 		TestAddRemove();
-		//TestAddBeforeAfter();
+		TestAddBeforeAfter();
 		TestEnumeration();
 		TestAddStart();
 	}
-	
-	//void TestIndexOperations() {
+
+	//void TestIndexOperations()
+	//{
 	//	var dll = new DoubleLinkedList<string>();
 	//	print("Test index");
-	//      dll.Insert(0, "Foo");
-	//		dll.Insert(1, "Bar");
+	//	dll.AddLast("Foo");
+	//	dll.AddLast("Bar");
 	//	print("Count: " + dll.Count + ", Value at 1: " + dll.GetValue(1));
 	//	print("Expected Count: 2, Value: Bar");
 	//	print(dll);
 	//}
 
-	void TestConstructor() {
-		print("Test Constructor");
-		var dll = new DoubleLinkedList<string>(new string[] {"Foo", "Bar"});
-		print("Count: " + dll.Count + ", Value at 1: " + dll.GetValue(1));
-		print("Expected Count: 2, Value: Bar");
-		print(dll);
-	}
+	//void TestConstructor() {
+	//	print("Test Constructor");
+	//	var dll = new DoubleLinkedList<string>(new string[] {"Foo", "Bar"});
+	//	print("Count: " + dll.Count + ", Value at 1: " + dll.GetValue(1));
+	//	print("Expected Count: 2, Value: Bar");
+	//	print(dll);
+	//}
 
 	void TestAddRemove() {
 		var dll = new DoubleLinkedList<string>();
