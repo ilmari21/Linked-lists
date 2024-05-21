@@ -59,6 +59,8 @@ public class DoubleLinkedList<T> : IEnumerable<T> {
 
     public DoubleLinkedList(IEnumerable<T> collection)
     {
+        head.next = tail;
+        tail.prev = head;
         var iter = collection.GetEnumerator();
         while (iter.MoveNext())
         {
@@ -66,145 +68,46 @@ public class DoubleLinkedList<T> : IEnumerable<T> {
         }
     }
 
-    //public void Insert(int index, T data)
-    //{
-    //    var newNode = new DLLNode();
-    //    newNode.data = data;
-    //    if (index == 0)
-    //    {
-    //        newNode.next = head;
-    //        newNode.prev = null;
-    //        head = newNode;
-    //    }
-
-    //    else
-    //    {
-    //        var left = GetNode(index - 1);
-    //        var right = left.next;
-    //        left.next = newNode;
-    //        newNode.next = right;
-    //        newNode.prev = left;
-    //    }
-    //}
-
-    public void AddStart(T value)
-    {
-        var newNode = new DLLNode();
-        newNode.data = value;
-        newNode.next = head;
-        head = newNode;
-    }
-
     public void AddLast(T value)
     {
-        AddAfter(head, value);
+        AddBefore(tail, value);
     }
 
     public void AddFirst(T value)
     {
-        AddBefore(tail, value);
+        AddAfter(head, value);
     }
 
     public void AddAfter(DLLNode node, T value)
     {
         var newNode = new DLLNode();
         newNode.data = value;
-        var it = FindNode(node);
-        newNode.next = it.next;
-        newNode.prev = it;
-        it.next.prev = newNode;
-        it.next = newNode;
-
-        //var newNode = new DLLNode();
-        //newNode.data = value;
-        //var it = FindNode(node);
-        //if (it != Last)
-        //{
-        //    newNode.next = it.next;
-        //    newNode.prev = it;
-        //    it.next = newNode;
-        //}
-        //else
-        //{
-        //    newNode.next = it.next;
-        //    newNode.prev = it;
-        //    it.next = newNode;
-        //}
+        newNode.next = node.next;
+        newNode.prev = node;
+        node.next.prev = newNode;
+        node.next = newNode;
     }
 
     public void AddBefore(DLLNode node, T value)
     {
         var newNode = new DLLNode();
         newNode.data = value;
-        var it = FindNode(node);
-        newNode.next = it;
-        newNode.prev = it.prev;
-        it.prev.next = newNode;
-        it.prev = newNode;
-
-        //var newNode = new DLLNode();
-        //newNode.data = value;
-        //var it = FindNode(node);
-        //if (it != First)
-        //{
-        //    newNode.next = it;
-        //    newNode.prev = it.prev;
-        //    it.prev = newNode;
-        //}
-        //else
-        //{
-        //    newNode.next = it;
-        //    newNode.prev = it.prev;
-        //    it.prev = newNode;
-        //}
+        newNode.next = node;
+        newNode.prev = node.prev;
+        node.prev.next = newNode;
+        node.prev = newNode;
     }
 
     void Remove(DLLNode node)
     {
-        if (node == head)
-        {
-            head = head.next;
-        }
-        else if (node == tail)
-        {
-            tail = tail.prev;
-        }
-        else
-        {
-            var iter = FindPreviousNode(node);
-            if (iter != null)
-            {
-                iter.next = node.next;
-            } 
-            else
-            {
-                throw new System.InvalidOperationException("node not found");
-            }
-        }
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
     }
 
     public void Remove(T value)
     {
-        if (head.next != null && head.next.data.Equals(value))
-        {
-            head.next = head.next.next;
-        }
-        else
-        {
-            var node = head.next.next;
-            var left = head.next;
-            while (node != null)
-            {
-                if (node.data.Equals(value))
-                {
-                    left.next = node.next;
-                    return;
-                }
-                left = node;
-                node = node.next;
-            }
-            throw new System.InvalidOperationException("node not found");
-        }
+        var removeNode = Find(value);
+        Remove(removeNode);
     }
 
     #region IEnumerable implementation
@@ -232,39 +135,17 @@ public class DoubleLinkedList<T> : IEnumerable<T> {
 
     public DLLNode Find(T data)
     {
-        var it = head;
-        while (it != null && !(it.data.Equals(data)))
+        var it = head.next;
+        while (it != tail && !(it.data.Equals(data)))
         {
             it = it.next;
         }
         return it;
-    }
-
-    // not in C# LinkedList (not needed in DLL)
-    public DLLNode FindNode(DLLNode node)
-    {
-        var it = head;
-        while (it != null && it != node)
-        {
-            it = it.next;
-        }
-        return it;
-    }
-
-    // not in C# LinkedList (not needed in DLL)
-    public DLLNode FindPreviousNode(DLLNode node)
-    {
-        var it = head;
-        while (it != null && it.next != node)
-        {
-            it = it.next;
-        }
-        return (it != null && it.next == node) ? it : null;
     }
 
     public DLLNode GetNode(int i)
     {
-        var it = head;
+        var it = head.next;
         while (i > 0)
         {
             it = it.next; //error
